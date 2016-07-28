@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>D3 - Data Driven Documents - Calendar</title>
+  <script src="https://jsbin.com/tijudo/2.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.js"></script>
+
+  <style type="text/css">
+
+  #calendar {
+    width: 400px;
+    height: 250px;
+    border-collapse: collapse;
+    font-size: 10px;
+    font-family: Helvetica, Arial, sans;
+    background-color: white;
+  }
+
+  #calendar tbody td {
+    border: 1px solid black;
+    text-align: right;
+    vertical-align: top;
+    width: 14%;
+  }
+
+  #calendar td.empty {
+    border: none;
+  }
+
+  </style>
+</head>
+<body>
+
+<table id="calendar"></table>
+
+<script type="text/javascript">
+
+var cal = new Calendar();
+
+var month = 11;
+var year = 2014;
+var weeks = cal.monthDays(year, month);
+
+var table = d3.select('#calendar');
+var header = table.append('thead');
+var body = table.append('tbody');
+
+header
+  .append('tr')
+  .append('td')
+  .attr('colspan', 7)
+  .style('text-align', 'center')
+  .text(consts.monthNames[month]);
+
+header
+  .append('tr')
+  .selectAll('td')
+  .data(consts.dayNames)
+  .enter()
+  .append('td')
+  .style('text-align', 'center')
+  .text(function (d) {
+    return d;
+  });
+
+weeks.forEach(function (week) {
+  body
+    .append('tr')
+    .selectAll('td')
+    .data(week)
+    .enter()
+    .append('td')
+    .attr('class', function (d) {
+      return d > 0 ? '' : 'empty';
+    })
+    .text(function (d) {
+      return d > 0 ? d : '';
+    });
+});
+
+
+
+</script>
+
+</body>
+</html>
